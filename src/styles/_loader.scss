@@ -1,0 +1,27 @@
+.loader-container {
+  position: fixed;
+  z-index: 9999;
+  background-color: #cceaf7;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  overflow: hidden;
+
+  &.active {
+    display: block;
+  }
+}
+
+.loader {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  width: 100px;
+  height: 100px;
+  border-radius: 100%;
+}
+

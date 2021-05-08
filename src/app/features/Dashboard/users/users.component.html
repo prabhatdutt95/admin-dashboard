@@ -1,0 +1,84 @@
+<form>
+  <div class="form-group w-100">
+    <input
+      class="form-control"
+      type="text"
+      placeholder="Seach by name, email or role"
+      name="searchTerm"
+      [(ngModel)]="searchService.searchTerm"
+    />
+    <span class="ml-3" *ngIf="searchService.loading$ | async">Loading...</span>
+  </div>
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col"></th>
+        <th scope="col" sortable="name" (sort)="onSort($event)">Name</th>
+        <th scope="col" sortable="email" (sort)="onSort($event)">Email</th>
+        <th scope="col" sortable="role" (sort)="onSort($event)">Role</th>
+        <th scope="col">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of users | async">
+        <th scope="row">
+          <div class="form-check">
+            <input
+              type="checkbox"
+              class="form-check-input"
+              id="{{ user.id }}"
+              name="user-selector"
+              (change)="selectUser(user)"
+              [(ngModel)]="user.selected"
+            />
+          </div>
+        </th>
+        <td>
+          <ngb-highlight
+            [result]="user.name"
+            [term]="searchService.searchTerm"
+          ></ngb-highlight>
+        </td>
+        <td>
+          <ngb-highlight
+            [result]="user.email"
+            [term]="searchService.searchTerm"
+          ></ngb-highlight>
+        </td>
+        <td>
+          <ngb-highlight
+            [result]="user.role"
+            [term]="searchService.searchTerm"
+          ></ngb-highlight>
+        </td>
+        <td class="d-flex">
+          <button class="btn btn-with-icon-only text-danger px-0" (click)="deleteUser(user)">
+            <i class="fas fa-trash-alt"></i>
+          </button>
+          <button class="btn btn-with-icon-only">
+            <i class="fas fa-edit"></i>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="d-flex justify-content-between">
+    <ngb-pagination
+      [collectionSize]="totalUsers | async"
+      [(page)]="searchService.page"
+      [pageSize]="searchService.pageSize"
+    >
+    </ngb-pagination>
+    <select
+      class="custom-select w-auto"
+      name="pageSize"
+      [(ngModel)]="searchService.pageSize"
+    >
+      <option [ngValue]="5">5 items per page</option>
+      <option [ngValue]="10">10 items per page</option>
+      <option [ngValue]="50">50 items per page</option>
+    </select>
+  </div>
+</form>

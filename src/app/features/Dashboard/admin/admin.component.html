@@ -1,0 +1,19 @@
+<div>
+  <div class="content-container container">
+    <div class="card" *ngIf="userList && userList.length > 0">
+      <div class="card-body">
+        <app-users
+          [usersRes]="userList"
+          (select)="selectUser($event)"
+          (delete)="deleteUser($event)"
+        ></app-users>
+      </div>
+    </div>
+  </div>
+  <action-bar
+    *ngIf="selectedUsers?.length && adminActionItems?.length"
+    [actionBarItems]="adminActionItems"
+    (actionBarItemClicked)="captureActionBarEvents($event)"
+  ></action-bar>
+</div>
+>
