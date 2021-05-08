@@ -3,7 +3,7 @@ import { IActionBarItemEventArgs, Action } from "src/app/shared/interfaces/actio
 import { ActionBarHelper } from "src/app/shared/Helpers/action-bar-helper.helper";
 import { UserService } from "src/app/shared/services/user.service";
 import { UserInterface } from "src/app/shared/interfaces/user.interface";
-
+import { ToastService } from "src/app/shared/services/toast.service";
 @Component({
   selector: "app-admin",
   templateUrl: "./admin.component.html",
@@ -14,7 +14,7 @@ export class AdminComponent implements OnInit {
   userList:UserInterface[] = [];
   selectedUsers:UserInterface[] = [];
 
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService, private toastService: ToastService) {}
 
   ngOnInit() {
     this.createActionBar();
@@ -54,6 +54,7 @@ export class AdminComponent implements OnInit {
         _ = {...selectedUser};
       }
     })
+    this.showSuccess('Succesfully updated the user details!');
   }
   deleteUser(selectedUser?: UserInterface) {
     if(selectedUser) {
@@ -64,5 +65,10 @@ export class AdminComponent implements OnInit {
       })
       this.selectedUsers = [];
     }
+    this.showSuccess('Succesfully deleted the user details!');
+  }
+  showSuccess(message) {
+    this.toastService.show(message, { classname: 'bg-success text-light', delay: 1000 });
+    setTimeout(() => {this.toastService.remove()}, 2000)
   }
 }
