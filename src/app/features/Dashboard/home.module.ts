@@ -10,14 +10,12 @@ import { SharedModule } from "../../shared/shared.module";
 import { UsersComponent } from "./users/users.component";
 import { AdminComponent } from "./admin/admin.component";
 import { HomeRoutingModule } from "./home-routing.module";
-import { ToastsContainer } from "src/app/shared/Helpers/toast-container.helper";
 
 @NgModule({
   declarations: [
     UsersComponent,
     AdminComponent,
     NgbdSortableHeader,
-    ToastsContainer,
   ],
   imports: [
     CommonModule,

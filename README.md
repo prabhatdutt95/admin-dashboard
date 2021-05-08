@@ -1,6 +1,15 @@
-# AngularTemplate
+# GT Admin Dashboard
+## Admin dashboard created using Angular 8
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.21.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.21
+
+[Deployed Demo](https://gtadmin.surge.sh/)
+
+## SnapshotS
+
+![snapshot](https://github.com/prabhatdutt95/admin-dashboard/blob/main/src/assets/screenshots/desktop.PNG?raw=true)
+![snapshot](https://github.com/prabhatdutt95/admin-dashboard/blob/main/src/assets/screenshots/mobile.PNG?raw=true)
+![snapshot](https://github.com/prabhatdutt95/admin-dashboard/blob/main/src/assets/screenshots/tablet.PNG?raw=true)
 
 ## Development server
 
@@ -17,6 +26,7 @@ Run `ng build` to build the project. The build artifacts will be stored in the `
 ## Running unit tests
 
 Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Currently the coverage is around 60%
 
 ## Running end-to-end tests
 

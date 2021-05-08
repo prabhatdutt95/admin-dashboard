@@ -32,7 +32,7 @@ export class UsersComponent implements OnInit {
 
   @ViewChildren(NgbdSortableHeader) headers: QueryList<NgbdSortableHeader>;
 
-  constructor(private searchService: SearchService) {}
+  constructor(public searchService: SearchService) {}
 
   ngOnInit() {
     this.getUsers();
