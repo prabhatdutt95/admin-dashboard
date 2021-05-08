@@ -25,6 +25,7 @@ export class UsersComponent implements OnInit {
   @Input() usersRes: UserInterface[];
   @Output() select: EventEmitter<any> = new EventEmitter();
   @Output() delete: EventEmitter<any> = new EventEmitter();
+  @Output() save: EventEmitter<any> = new EventEmitter();
   users: Observable<UserInterface[]>;
   totalUsers: Observable<number>;
 
@@ -71,4 +72,8 @@ export class UsersComponent implements OnInit {
   deleteUser(selectedUser) {
     this.delete.emit(selectedUser)
   }
+  saveUser(selectedUser) {
+    this.save.emit(selectedUser)
+  }
+
 }

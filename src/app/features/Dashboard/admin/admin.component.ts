@@ -26,7 +26,7 @@ export class AdminComponent implements OnInit {
   getUsers() {
     this.userService.getUsers().subscribe((users) => {
       users.forEach(user => {
-        this.userList.push({...user, selected: false});
+        this.userList.push({...user, selected: false, isEditable: false});
       })
     })
   }
@@ -46,7 +46,14 @@ export class AdminComponent implements OnInit {
     } else if (!selectedUser.selected && this.selectedUsers.find(_ => _.id == selectedUser.id)) {
       this.selectedUsers = this.selectedUsers.filter(_ => _.id != selectedUser.id);
     }
-    console.log(this.selectedUsers)
+  }
+
+  saveUser(selectedUser?: UserInterface) {
+    this.userList.forEach(_ => {
+      if(_.id == selectedUser.id) {
+        _ = {...selectedUser};
+      }
+    })
   }
   deleteUser(selectedUser?: UserInterface) {
     if(selectedUser) {

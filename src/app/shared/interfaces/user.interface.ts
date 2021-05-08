@@ -5,4 +5,5 @@ export interface UserInterface {
   role: string;
   total?: number;
   selected?: boolean;
+  isEditable?: boolean;
 }
