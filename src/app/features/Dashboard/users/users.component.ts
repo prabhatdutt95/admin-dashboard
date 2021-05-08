@@ -28,13 +28,13 @@ export class UsersComponent implements OnInit {
   @Output() save: EventEmitter<any> = new EventEmitter();
   users: Observable<UserInterface[]>;
   totalUsers: Observable<number>;
+  placeholderArray = new Array(10).fill("");
 
   @ViewChildren(NgbdSortableHeader) headers: QueryList<NgbdSortableHeader>;
 
   constructor(private searchService: SearchService) {}
 
   ngOnInit() {
-    console.log(this.usersRes)
     this.getUsers();
   }
 
@@ -42,8 +42,8 @@ export class UsersComponent implements OnInit {
     for (const propName in changes) {
       if (changes.hasOwnProperty(propName)) {
         switch (propName) {
-          case 'usersRes': {
-            this.getUsers()
+          case "usersRes": {
+            this.getUsers();
           }
         }
       }
@@ -51,9 +51,9 @@ export class UsersComponent implements OnInit {
   }
 
   getUsers() {
-      this.searchService.filterUsers(this.usersRes);
-      this.users = this.searchService.users$;
-      this.totalUsers = this.searchService.total$;
+    this.searchService.filterUsers(this.usersRes);
+    this.users = this.searchService.users$;
+    this.totalUsers = this.searchService.total$;
   }
 
   onSort({ column, direction }: SortEvent) {
@@ -67,13 +67,12 @@ export class UsersComponent implements OnInit {
     this.searchService.sortDirection = direction;
   }
   selectUser(selectedUser) {
-    this.select.emit(selectedUser)
+    this.select.emit(selectedUser);
   }
   deleteUser(selectedUser) {
-    this.delete.emit(selectedUser)
+    this.delete.emit(selectedUser);
   }
   saveUser(selectedUser) {
-    this.save.emit(selectedUser)
+    this.save.emit(selectedUser);
   }
-
 }

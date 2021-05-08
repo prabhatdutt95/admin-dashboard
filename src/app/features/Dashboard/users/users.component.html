@@ -7,110 +7,140 @@
       name="searchTerm"
       [(ngModel)]="searchService.searchTerm"
     />
-    <span class="ml-3" *ngIf="searchService.loading$ | async">Loading...</span>
+    <!-- <span class="ml-3" *ngIf="searchService.loading$ | async">Loading...</span> -->
   </div>
 
-  <table class="table table-striped table-responsive-sm">
-    <thead>
-      <tr>
-        <th scope="col"></th>
-        <th scope="col" sortable="name" (sort)="onSort($event)">Name</th>
-        <th scope="col" sortable="email" (sort)="onSort($event)">Email</th>
-        <th scope="col" sortable="role" (sort)="onSort($event)">Role</th>
-        <th scope="col">Action</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let user of users | async">
-        <ng-container *ngIf="!user?.isEditable; else editableUser">
-          <td scope="row">
-            <div class="form-check">
-              <input
-                type="checkbox"
-                class="form-check-input"
-                id="{{ user.id }}"
-                name="user-selector"
-                (change)="selectUser(user)"
-                [(ngModel)]="user.selected"
-              />
+  <ng-container *ngIf="searchService.loading$ | async; else actualData">
+    <table class="table table-striped table-responsive-sm">
+      <thead>
+        <tr>
+          <th scope="col"></th>
+          <th scope="col" sortable="name" (sort)="onSort($event)">Name</th>
+          <th scope="col" sortable="email" (sort)="onSort($event)">Email</th>
+          <th scope="col" sortable="role" (sort)="onSort($event)">Role</th>
+          <th scope="col">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let j of placeholderArray">
+          <td *ngFor="let i of placeholderArray.slice(0, 5)">
+            <div class="ph-row">
+              <div class="p-0 ph-col-8 ph-item"></div>
             </div>
           </td>
-          <td>
-            <ngb-highlight
-              [result]="user.name"
-              [term]="searchService.searchTerm"
-            ></ngb-highlight>
-          </td>
-          <td>
-            <ngb-highlight
-              [result]="user.email"
-              [term]="searchService.searchTerm"
-            ></ngb-highlight>
-          </td>
-          <td>
-            <ngb-highlight
-              [result]="user.role"
-              [term]="searchService.searchTerm"
-            ></ngb-highlight>
-          </td>
-          <td class="d-flex">
-            <button
-              class="btn btn-with-icon-only text-danger px-0"
-              (click)="deleteUser(user)"
-            >
-              <i class="fas fa-trash-alt"></i>
-            </button>
-            <button class="btn btn-with-icon-only"
-              (click)="user.isEditable = true;">
-              <i class="fas fa-edit"></i>
-            </button>
-          </td>
-        </ng-container>
-        <ng-template #editableUser>
-          <td></td>
-          <td>
-            <input
-              class="form-control"
-              type="text"
-              placeholder="Name"
-              name="username"
-              [(ngModel)]="user.name"
-            />
-          </td>
-          <td>
-            <input
-              class="form-control"
-              type="email"
-              placeholder="Email ID"
-              name="email"
-              [(ngModel)]="user.email"
-            />
-          </td>
-          <td>
-            <input
-              class="form-control"
-              type="text"
-              placeholder="Role"
-              name="role"
-              [(ngModel)]="user.role"
-            />
-          </td>
-          <td class="d-flex">
-            <button
-              class="btn btn-with-icon-only text-danger px-0"
-              (click)="user.isEditable = false;"
-            >
-            <i class="fas fa-times"></i>
-            </button>
-            <button class="btn btn-with-icon-only"
-              (click)="saveUser(user); user.isEditable = false;">
-              <i class="fas fa-save"></i>
-            </button>
-          </td>
-        </ng-template>
-      </tr>
-    </tbody>
-  </table>
+        </tr>
+      </tbody>
+    </table>
+  </ng-container>
+  <ng-template #actualData>
+    <table class="table table-striped table-responsive-sm">
+      <thead>
+        <tr>
+          <th scope="col"></th>
+          <th scope="col" sortable="name" (sort)="onSort($event)">Name</th>
+          <th scope="col" sortable="email" (sort)="onSort($event)">Email</th>
+          <th scope="col" sortable="role" (sort)="onSort($event)">Role</th>
+          <th scope="col">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- <ng-container *ngIf="searchService.loading$ | async;else placeholder"> -->
+        <tr *ngFor="let user of users | async">
+          <ng-container *ngIf="!user?.isEditable; else editableUser">
+            <td scope="row">
+              <div class="form-check">
+                <input
+                  type="checkbox"
+                  class="form-check-input"
+                  id="{{ user.id }}"
+                  name="user-selector"
+                  (change)="selectUser(user)"
+                  [(ngModel)]="user.selected"
+                />
+              </div>
+            </td>
+            <td>
+              <ngb-highlight
+                [result]="user.name"
+                [term]="searchService.searchTerm"
+              ></ngb-highlight>
+            </td>
+            <td>
+              <ngb-highlight
+                [result]="user.email"
+                [term]="searchService.searchTerm"
+              ></ngb-highlight>
+            </td>
+            <td>
+              <ngb-highlight
+                [result]="user.role"
+                [term]="searchService.searchTerm"
+              ></ngb-highlight>
+            </td>
+            <td class="d-flex">
+              <button
+                class="btn btn-with-icon-only text-danger px-0"
+                (click)="deleteUser(user)"
+              >
+                <i class="fas fa-trash-alt"></i>
+              </button>
+              <button
+                class="btn btn-with-icon-only"
+                (click)="user.isEditable = true"
+              >
+                <i class="fas fa-edit"></i>
+              </button>
+            </td>
+          </ng-container>
+          <ng-template #editableUser>
+            <td></td>
+            <td>
+              <input
+                class="form-control"
+                type="text"
+                placeholder="Name"
+                name="username"
+                [(ngModel)]="user.name"
+              />
+            </td>
+            <td>
+              <input
+                class="form-control"
+                type="email"
+                placeholder="Email ID"
+                name="email"
+                [(ngModel)]="user.email"
+              />
+            </td>
+            <td>
+              <input
+                class="form-control"
+                type="text"
+                placeholder="Role"
+                name="role"
+                [(ngModel)]="user.role"
+              />
+            </td>
+            <td class="d-flex">
+              <button
+                class="btn btn-with-icon-only text-danger px-0"
+                (click)="user.isEditable = false"
+              >
+                <i class="fas fa-times"></i>
+              </button>
+              <button
+                class="btn btn-with-icon-only"
+                (click)="saveUser(user); user.isEditable = false"
+              >
+                <i class="fas fa-save"></i>
+              </button>
+            </td>
+          </ng-template>
+        </tr>
+        <!-- </ng-container> -->
+      </tbody>
+    </table>
+  </ng-template>
 
   <div class="d-flex justify-content-between">
     <ngb-pagination
