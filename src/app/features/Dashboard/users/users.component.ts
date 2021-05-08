@@ -1,3 +1,8 @@
+/**
+ * @author - Prabhat Dutt
+ * @description - This component is used to display and
+ * modify the user-list by filter, save and delete functionality.
+ */
 import {
   Component,
   SimpleChanges,
@@ -23,17 +28,22 @@ import {
 })
 export class UsersComponent implements OnInit {
   @Input() usersRes: UserInterface[];
+
   @Output() select: EventEmitter<any> = new EventEmitter();
   @Output() delete: EventEmitter<any> = new EventEmitter();
   @Output() save: EventEmitter<any> = new EventEmitter();
+
   users: Observable<UserInterface[]>;
   totalUsers: Observable<number>;
-  placeholderArray = new Array(10).fill("");
+  placeholderRow = new Array(10).fill("");
 
   @ViewChildren(NgbdSortableHeader) headers: QueryList<NgbdSortableHeader>;
 
   constructor(public searchService: SearchService) {}
 
+  /**
+   * @description - Initialising the user table.
+  */
   ngOnInit() {
     this.getUsers();
   }
@@ -50,12 +60,18 @@ export class UsersComponent implements OnInit {
     }
   }
 
+  /**
+   * @description - This is used to get the users after filtering.
+   */
   getUsers() {
     this.searchService.filterUsers(this.usersRes);
     this.users = this.searchService.users$;
     this.totalUsers = this.searchService.total$;
   }
 
+  /**
+   * @description - This is used to sort the column in a particular direction.
+   */
   onSort({ column, direction }: SortEvent) {
     this.headers.forEach((header) => {
       if (header.sortable !== column) {
@@ -66,12 +82,21 @@ export class UsersComponent implements OnInit {
     this.searchService.sortColumn = column;
     this.searchService.sortDirection = direction;
   }
+  /**
+   * @description - This is used to emit the particular user for selection.
+   */
   selectUser(selectedUser) {
     this.select.emit(selectedUser);
   }
+  /**
+   * @description - This is used to emit the particular user for deleting.
+   */
   deleteUser(selectedUser) {
     this.delete.emit(selectedUser);
   }
+  /**
+   * @description - This is used to emit the particular user for saving.
+   */
   saveUser(selectedUser) {
     this.save.emit(selectedUser);
   }

@@ -1,4 +1,5 @@
 <form>
+  <!-- Search/Filter Section -->
   <div class="form-group w-100">
     <input
       class="form-control"
@@ -7,9 +8,9 @@
       name="searchTerm"
       [(ngModel)]="searchService.searchTerm"
     />
-    <!-- <span class="ml-3" *ngIf="searchService.loading$ | async">Loading...</span> -->
   </div>
 
+  <!-- Placeholder for table while data is modified -->
   <ng-container *ngIf="searchService.loading$ | async; else actualData">
     <table class="table table-striped table-responsive-sm">
       <thead>
@@ -22,8 +23,8 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let j of placeholderArray">
-          <td *ngFor="let i of placeholderArray.slice(0, 5)">
+        <tr *ngFor="let row of placeholderRow">
+          <td *ngFor="let col of [0,1,2,3,4]">
             <div class="ph-row">
               <div class="p-0 ph-col-8 ph-item"></div>
             </div>
@@ -32,6 +33,8 @@
       </tbody>
     </table>
   </ng-container>
+
+  <!-- Actual Table Content -->
   <ng-template #actualData>
     <table class="table table-striped table-responsive-sm">
       <thead>
@@ -44,7 +47,6 @@
         </tr>
       </thead>
       <tbody>
-        <!-- <ng-container *ngIf="searchService.loading$ | async;else placeholder"> -->
         <tr *ngFor="let user of users | async">
           <ng-container *ngIf="!user?.isEditable; else editableUser">
             <td scope="row">
@@ -137,11 +139,11 @@
             </td>
           </ng-template>
         </tr>
-        <!-- </ng-container> -->
       </tbody>
     </table>
   </ng-template>
 
+  <!-- Pagination Section -->
   <div class="d-md-flex justify-content-between">
     <ngb-pagination
       [collectionSize]="totalUsers | async"

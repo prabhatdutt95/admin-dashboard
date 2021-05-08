@@ -1,46 +1,98 @@
 <div class="action-bar">
-    <div id="action-bar-items-left" class="d-flex">
-        <ng-container *ngFor="let actionBarItem of actionBarItems;trackBy: trackByMethod">
-            <div class="action-bar-item" *ngIf="actionBarItem.controlAlignment === actionBarItemAlignment.Left">
-                <ng-container *ngTemplateOutlet="actionBarItemTemplate; context:{actionBarItem: actionBarItem}">
-                </ng-container>
-            </div>
+  <div id="action-bar-items-left" class="d-flex">
+    <ng-container
+      *ngFor="let actionBarItem of actionBarItems; trackBy: trackByMethod"
+    >
+      <div
+        class="action-bar-item"
+        *ngIf="actionBarItem.controlAlignment === actionBarItemAlignment.Left"
+      >
+        <ng-container
+          *ngTemplateOutlet="
+            actionBarItemTemplate;
+            context: { actionBarItem: actionBarItem }
+          "
+        >
         </ng-container>
-    </div>
-    <div id="action-bar-items-middle" class="d-flex">
-        <ng-container *ngFor="let actionBarItem of actionBarItems; trackBy: trackByMethod">
-            <div class="action-bar-item" *ngIf="actionBarItem.controlAlignment === actionBarItemAlignment.Center">
-                {{actionBarItem.name}}
-                <ng-container *ngTemplateOutlet="actionBarItemTemplate; context:{actionBarItem: actionBarItem}">
-                </ng-container>
-            </div>
+      </div>
+    </ng-container>
+  </div>
+  <div id="action-bar-items-middle" class="d-flex">
+    <ng-container
+      *ngFor="let actionBarItem of actionBarItems; trackBy: trackByMethod"
+    >
+      <div
+        class="action-bar-item"
+        *ngIf="actionBarItem.controlAlignment === actionBarItemAlignment.Center"
+      >
+        {{ actionBarItem.name }}
+        <ng-container
+          *ngTemplateOutlet="
+            actionBarItemTemplate;
+            context: { actionBarItem: actionBarItem }
+          "
+        >
         </ng-container>
-    </div>
-    <div id="action-bar-items-right" class="d-flex">
-        <ng-container *ngFor="let actionBarItem of actionBarItems; trackBy: trackByMethod">
-            <div class="action-bar-item" *ngIf="actionBarItem.controlAlignment === actionBarItemAlignment.Right">
-                <ng-container *ngTemplateOutlet="actionBarItemTemplate; context:{actionBarItem: actionBarItem}">
-                </ng-container>
-            </div>
+      </div>
+    </ng-container>
+  </div>
+  <div id="action-bar-items-right" class="d-flex">
+    <ng-container
+      *ngFor="let actionBarItem of actionBarItems; trackBy: trackByMethod"
+    >
+      <div
+        class="action-bar-item"
+        *ngIf="actionBarItem.controlAlignment === actionBarItemAlignment.Right"
+      >
+        <ng-container
+          *ngTemplateOutlet="
+            actionBarItemTemplate;
+            context: { actionBarItem: actionBarItem }
+          "
+        >
         </ng-container>
-    </div>
+      </div>
+    </ng-container>
+  </div>
 </div>
 
-
 <ng-template #actionBarItemTemplate let-actionBarItem="actionBarItem">
-    <button [title]="actionBarItem.name" class="btn "
-        [class.btn-primary]="actionBarItem.controlType === controlType.PrimaryButton"
-        [class.btn-light]="actionBarItem.controlType === controlType.SecondaryButton" 
-        [class.btn-success]="actionBarItem.controlType === controlType.SuccessButton"
-        [class.btn-danger]="actionBarItem.controlType === controlType.DangerButton"
-        [ngClass]="{
-            'btn-with-icon-left':actionBarItem.iconAlignment === actionBarItemAlignment.Left,
-            'btn-with-icon-right': actionBarItem.iconAlignment === actionBarItemAlignment.Right,
-            'btn-with-icon-only': actionBarItem.iconAlignment === actionBarItemAlignment.Center  }"
-        (click)="emitEvent($event, actionBarItem.action.click, actionBarItem)">
-        <em *ngIf="actionBarItem.iconAlignment === actionBarItemAlignment.Left  || actionBarItem.iconAlignment === actionBarItemAlignment.Center"
-            [class]="actionBarItem.iconClass"></em>
-        <ng-container *ngIf="actionBarItem.shouldDisplayName">{{actionBarItem.name}}</ng-container>
-        <em *ngIf="actionBarItem.iconAlignment === actionBarItemAlignment.Right" [class]="actionBarItem.iconClass"></em>
-    </button>
+  <button
+    [title]="actionBarItem.name"
+    class="btn"
+    [class.btn-primary]="
+      actionBarItem.controlType === controlType.PrimaryButton
+    "
+    [class.btn-light]="
+      actionBarItem.controlType === controlType.SecondaryButton
+    "
+    [class.btn-success]="
+      actionBarItem.controlType === controlType.SuccessButton
+    "
+    [class.btn-danger]="actionBarItem.controlType === controlType.DangerButton"
+    [ngClass]="{
+      'btn-with-icon-left':
+        actionBarItem.iconAlignment === actionBarItemAlignment.Left,
+      'btn-with-icon-right':
+        actionBarItem.iconAlignment === actionBarItemAlignment.Right,
+      'btn-with-icon-only':
+        actionBarItem.iconAlignment === actionBarItemAlignment.Center
+    }"
+    (click)="emitEvent($event, actionBarItem.action.click, actionBarItem)"
+  >
+    <em
+      *ngIf="
+        actionBarItem.iconAlignment === actionBarItemAlignment.Left ||
+        actionBarItem.iconAlignment === actionBarItemAlignment.Center
+      "
+      [class]="actionBarItem.iconClass"
+    ></em>
+    <ng-container *ngIf="actionBarItem.shouldDisplayName">{{
+      actionBarItem.name
+    }}</ng-container>
+    <em
+      *ngIf="actionBarItem.iconAlignment === actionBarItemAlignment.Right"
+      [class]="actionBarItem.iconClass"
+    ></em>
+  </button>
 </ng-template>

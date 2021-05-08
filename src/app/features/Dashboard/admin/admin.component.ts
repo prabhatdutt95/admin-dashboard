@@ -1,3 +1,8 @@
+/**
+ * @author - Prabhat Dutt
+ * @description - This is the generic component encapsulating 'user' component  and contains generic component
+ * 'action-bar', which is used to show operations such as delete in the footer.
+ */
 import { Component, OnInit } from "@angular/core";
 import { IActionBarItemEventArgs, Action } from "src/app/shared/interfaces/action-bar-item.interface";
 import { ActionBarHelper } from "src/app/shared/Helpers/action-bar-helper.helper";
@@ -16,6 +21,9 @@ export class AdminComponent implements OnInit {
 
   constructor(private userService: UserService, private toastService: ToastService) {}
 
+  /**
+   * @description - Initialising the action bar and populating the user-table.
+  */
   ngOnInit() {
     this.createActionBar();
     this.getUsers();
@@ -23,6 +31,9 @@ export class AdminComponent implements OnInit {
   createActionBar() {
     this.adminActionItems = ActionBarHelper.adminActionBarItems();
   }
+  /**
+   * @description - Subscribing to observable to get user-list as response.
+  */
   getUsers() {
     this.userService.getUsers().subscribe((users) => {
       users.forEach(user => {
@@ -30,6 +41,9 @@ export class AdminComponent implements OnInit {
       })
     })
   }
+  /**
+   * @description - Capture events for each operation on action-bar.
+  */
   captureActionBarEvents(eventArgs: IActionBarItemEventArgs) {
     switch (+eventArgs.action) {
       case Action.Delete: {
@@ -40,6 +54,9 @@ export class AdminComponent implements OnInit {
       }
     }
   }
+  /**
+   * @description - Initialising the action bar and populating the user-table.
+  */
   selectUser(selectedUser: UserInterface) {
     if(selectedUser.selected) {
       this.selectedUsers.push(selectedUser);
@@ -47,7 +64,9 @@ export class AdminComponent implements OnInit {
       this.selectedUsers = this.selectedUsers.filter(_ => _.id != selectedUser.id);
     }
   }
-
+  /**
+   * @description - For saving the selected user.
+  */
   saveUser(selectedUser?: UserInterface) {
     this.userList.forEach(_ => {
       if(_.id == selectedUser.id) {
@@ -56,6 +75,9 @@ export class AdminComponent implements OnInit {
     })
     this.showSuccess('Succesfully updated the user details!');
   }
+  /**
+   * @description - This is used to delete the selected user by filtering the id through the array-iteration.
+  */
   deleteUser(selectedUser?: UserInterface) {
     if(selectedUser) {
       this.userList = this.userList.filter(_ => _.id != selectedUser.id);
