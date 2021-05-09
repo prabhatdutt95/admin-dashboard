@@ -93,4 +93,12 @@ export class AdminComponent implements OnInit {
     this.toastService.show(message, { classname: 'bg-success text-light', delay: 1000 });
     setTimeout(() => {this.toastService.remove()}, 2000)
   }
+  pageChange(e) {
+    this.selectedUsers = [];
+    this.userList.forEach(_ => {
+      if(_.selected) {
+        _.selected = false;
+      }
+    })
+  }
 }

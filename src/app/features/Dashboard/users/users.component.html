@@ -47,7 +47,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr [class.bg-gray-light]="user?.selected" *ngFor="let user of users | async">
+        <tr [class.bg-gray-light]="user?.selected" *ngFor="let user of users | async; let i = index">
           <ng-container *ngIf="!user?.isEditable; else editableUser">
             <td scope="row">
               <div class="form-check">
@@ -125,12 +125,6 @@
             </td>
             <td class="d-flex">
               <button
-                class="btn btn-with-icon-only text-danger px-0"
-                (click)="user.isEditable = false"
-              >
-                <i class="fas fa-times"></i>
-              </button>
-              <button
                 class="btn btn-with-icon-only"
                 (click)="saveUser(user); user.isEditable = false"
               >
@@ -149,6 +143,7 @@
       [collectionSize]="totalUsers | async"
       [(page)]="searchService.page"
       [pageSize]="searchService.pageSize"
+      (pageChange)="onPageChange($event)"
     >
     </ngb-pagination>
     <select

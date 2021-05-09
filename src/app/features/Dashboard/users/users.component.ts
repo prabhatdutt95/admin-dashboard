@@ -32,6 +32,7 @@ export class UsersComponent implements OnInit {
   @Output() select: EventEmitter<any> = new EventEmitter();
   @Output() delete: EventEmitter<any> = new EventEmitter();
   @Output() save: EventEmitter<any> = new EventEmitter();
+  @Output() pageChange: EventEmitter<any> = new EventEmitter();
 
   users: Observable<UserInterface[]>;
   totalUsers: Observable<number>;
@@ -99,5 +100,8 @@ export class UsersComponent implements OnInit {
    */
   saveUser(selectedUser) {
     this.save.emit(selectedUser);
+  }
+  onPageChange(e) {
+    this.pageChange.emit(null)
   }
 }
